@@ -15,8 +15,8 @@ Antes de iniciar, certifique-se de ter instalado:
 1. **Clonar o repositório**
 
 ```
-git clone https://github.com/Impactados/to-do-flask.git
-cd to-do-flask
+git clone https://github.com/GuilhermeMoreira0/Suplementos.git
+cd Suplementos
 code .
 ```
 
@@ -42,10 +42,10 @@ No ambiente de produção, você utilizará o docker-compose.prod.yml para sobre
 1. **Enviroments**
 Crie um arquivo .env na raiz do projeto e preencha-o com as variáveis de ambiente necessárias para produção. Exemplo:
 ```
-DATABASE=prod_database
-USER=prod_user
-PASSWORD=your_secure_password
-SECRET=your_secret_key
+$servername = "db";
+$username = "myuser";
+$password = "mypassword";
+$database = "mydatabase";
 ```
 
 2. **Iniciar o projeto em produção**
@@ -60,4 +60,4 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml down
 ```
 
 # Acessar o Aplicativo
-Após iniciar o aplicativo, você pode acessá-lo abrindo http://localhost:5000 no seu navegador, assumindo que o docker-compose mapeou a porta 5000 do contêiner para a porta 5000 do seu host.
+Após iniciar o aplicativo, você pode acessá-lo abrindo http://localhost:8080/index.php no seu navegador, assumindo que o docker-compose mapeou a porta 8080 do contêiner para a porta 8080 do seu host.
