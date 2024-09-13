@@ -12,6 +12,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$message = ""; // Variável para armazenar a mensagem
+
 // Processar o formulário quando submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
@@ -24,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssss", $nome, $tipo, $preco, $quantidade);
 
     if ($stmt->execute()) {
-        echo "Dados enviados com sucesso!";
+        $message = "Dados enviados com sucesso!";
     } else {
-        echo "Erro ao enviar dados: " . $stmt->error;
+        $message = "Erro ao enviar dados: " . $stmt->error;
     }
 
     $stmt->close();
@@ -144,6 +146,11 @@ select {
             <input type="text" id="quantidade" name="quantidade" required>
 
             <input type="submit" value="Enviar">
+
+            <!-- Exibir a mensagem de sucesso ou erro aqui -->
+            <?php if (!empty($message)): ?>
+                <p style="margin-top: 20px; color: black;"><?php echo $message; ?></p>
+            <?php endif; ?>
         </form>
     </div> 
 </body>
