@@ -1,21 +1,36 @@
 <?php
-$servername = "db";
-$username = "myuser";
-$password = "mypassword";
-$database = "mydatabase";
+$message = ""; // Variável para armazenar a mensagem de sucesso ou erro
 
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $database);
+// Verificar se o formulário de login foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['usuario']) && isset($_POST['senha'])) {
+    $usuario = $_POST['usuario'];
+    $senha = $_POST['senha'];
 
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    // Lógica de validação do login
+    if ($usuario == 'admin' && $senha == '1234') {
+       $message1="Login realizado com sucesso! Bem-vindo, $usuario.";
+        // Aqui você pode redirecionar para outra página ou exibir a página principal
+    } else {
+        $message1="Usuário ou senha inválidos.";
+        exit(); // Para a execução se o login falhar
+    }
 }
 
-$message = ""; // Variável para armazenar a mensagem
+// Verificar se o formulário de suplementos foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nome']) && isset($_POST['tipo']) && isset($_POST['preco']) && isset($_POST['quantidade'])) {
+    $servername = "db";
+    $username = "myuser";
+    $password = "mypassword";
+    $database = "mydatabase";
 
-// Processar o formulário quando submetido
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Criar conexão
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Verificar a conexão
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
     $nome = $_POST['nome'];
     $tipo = $_POST['tipo'];
     $preco = $_POST['preco'];
@@ -33,8 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +114,7 @@ input[type="text"], select {
 
 input[type="submit"] {
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #565656;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -112,23 +125,25 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #c1c1c1;
 }
 
 select {
     background-color: #fff;
     color: #555;
     appearance: none;
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 </style>
 <body>
-   <div class="container"> 
-      <h1>Formulário para cadastrar suplementos</h1>
-        <form method="post" action="">
+    <?php include 'header.php'; ?>
+    <div class="container">
+        <h1>Formulário para cadastrar suplementos</h1>
+        <form method="post" action="index.php">
             <label for="nome">Marca:</label>
             <input type="text" id="nome" name="nome" required><br><br>
+            <span id="erroNome" style="color: red;"></span>
 
             <label for="tipo">Tipo:</label>
             <select name="tipo" id="tipo">
@@ -154,5 +169,6 @@ select {
         </form>
     </div> 
 </body>
+
 
 </html>
